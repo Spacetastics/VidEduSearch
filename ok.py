@@ -1,4 +1,4 @@
 import API.py
-import MocoGui.py
+import GUI.py
 
 API.search("topic", 0, "short")
