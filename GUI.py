@@ -28,7 +28,7 @@ def sQuery():
    sRequest = searchBar2.get()
    print("You Searched:",sRequest)
 #This is the name for the search bar
-searchBar1 = tkinter.Label(ResourceMachine, text="What Is Your Topic",font=("montserrat",17,"bold")).grid(row=0, column=1, sticky="nsew")
+searchBar1 = tkinter.Label(ResourceMachine, text="What Is Your Topic?",font=("montserrat",17,"bold")).grid(row=0, column=1, sticky="nsew")
 #searchBar1.pack()
 #.grid(row=0, column=1)
 #searchBar2 = tkinter.Entry(ResourceMachine,textvariable=sRequest, font=('calibre',10,'normal')).grid(row=0, column=1)
