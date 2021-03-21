@@ -19,8 +19,10 @@ ResourceMachine=tkinter.Tk()
 #This is the name for the windows
 ResourceMachine.title("To Be Determined")
 #This is what determines the window size
-ResourceMachine.geometry("600x600")
-
+ResourceMachine.geometry("1000x600")
+tkinter.Grid.rowconfigure(ResourceMachine, 0, weight=0)
+tkinter.Grid.columnconfigure(ResourceMachine, 1, weight=4)
+#sets sRequest as a string
 sRequest=tkinter.StringVar()
 #This is the search bar
 searchBar2 = tkinter.Entry(ResourceMachine,textvariable=sRequest, font=('calibre',10,'normal'))
