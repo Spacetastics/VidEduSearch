@@ -1,4 +1,5 @@
 #Written By: Naadir Bakari
+#This Has New Names
 #This imports the library tkinter what is used to make the GUI
 import tkinter
 #This creates the main window
@@ -12,10 +13,10 @@ tkinter.Grid.columnconfigure(ResourceMachine, 1, weight=4)
 
 sRequest=tkinter.StringVar()
 
-bPhoto1=tkinter.PhotoImage(file="customButton1.png")
-bPhoto2=tkinter.PhotoImage(file="customButton2.png")
-bPhoto3=tkinter.PhotoImage(file="customButton3.png")
-bPhoto4=tkinter.PhotoImage(file="customButton4.png")
+bPhoto1=tkinter.PhotoImage(file="search button default.png")
+bPhoto2=tkinter.PhotoImage(file="search button hover.png")
+bPhoto3=tkinter.PhotoImage(file="go button default.png")
+bPhoto4=tkinter.PhotoImage(file="go button hover.png")
 #This is the search bar
 searchBar2 = tkinter.Entry(ResourceMachine,textvariable=sRequest, font=('calibre',10,'normal'))
 searchBar2.grid(row=1, column=1, sticky="nsew")
