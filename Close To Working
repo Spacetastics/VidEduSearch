@@ -1,0 +1,196 @@
+import tkinter
+
+from googleapiclient.discovery import build
+
+ResourceMachine=tkinter.Tk()
+
+ResourceMachine.title("VideoSearch Academy")
+
+ResourceMachine.geometry("1000x600")
+tkinter.Grid.rowconfigure(ResourceMachine, 0, weight=0)
+tkinter.Grid.columnconfigure(ResourceMachine, 1, weight=4)
+
+sRequest=tkinter.StringVar()
+nRequest=0
+bPhoto1=tkinter.PhotoImage(file="customButton1.png")
+bPhoto2=tkinter.PhotoImage(file="customButton2.png")
+bPhoto3=tkinter.PhotoImage(file="customButton3.png")
+bPhoto4=tkinter.PhotoImage(file="customButton4.png")
+
+searchBar2 = tkinter.Entry(ResourceMachine,textvariable=sRequest, font=('calibre',10,'normal'))
+searchBar2.grid(row=1, column=1, sticky="nsew")
+
+def sQuery():
+
+   sRequest = searchBar2.get()
+   print("You Searched:",sRequest)
+
+searchBar1 = tkinter.Label(ResourceMachine, text="What Is Your Topic",font=("montserrat",17,"bold")).grid(row=0, column=1, sticky="nsew")
+
+nRequest=tkinter.IntVar()
+
+searchNumberName=tkinter.Label(ResourceMachine,text="Results Per Page",font=("montserrat"))
+searchNumber=tkinter.Spinbox( ResourceMachine, from_=5, to=20,textvariable=nRequest,width=2,font=("montserrat"))
+searchNumber.grid(row=10,column=1, sticky="ns")
+searchNumberName.grid(row=9,column=1, sticky="nsew")
+
+def nQuery():
+
+   nRequest = searchNumber.get()
+   print(nRequest,"results")
+
+def lChoice():
+   lenChoice= "U Picked " + str(choice1.get())
+
+   print(lenChoice)
+choice1 = tkinter.StringVar()
+
+C1= tkinter.Radiobutton(ResourceMachine,text="Shorter Than 4 Minutes", variable=choice1, value="1",font=("montserrat"))
+C2= tkinter.Radiobutton(ResourceMachine,text="Between 4 and 20 Minutes", variable=choice1, value="2",font=("montserrat"))
+C3= tkinter.Radiobutton(ResourceMachine,text="Longer Than 20 Minutes", variable=choice1, value="3",font=("montserrat"))
+C4= tkinter.Radiobutton(ResourceMachine,text="Any Length", variable=choice1, value="4",font=("montserrat"))
+C1.grid(row=5,column=1)
+C2.grid(row=6,column=1)
+C3.grid(row=7,column=1)
+C4.grid(row=8,column=1)
+
+C4.select()
+
+label = tkinter.Label(ResourceMachine)
+
+sSpace=tkinter.Label ( ResourceMachine, text="----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------")
+sSpace.grid(row=14,column=1)
+
+# def on_enter(e):
+#    bSwitcher2()
+#
+# def on_leave(e):
+#    bSwitcher1()
+#
+# def bSwitcher1():
+#    searchButton1.config(image=bPhoto1)
+# def bSwitcher2():
+#    searchButton1.config(image=bPhoto2)
+#
+# searchButton1 = tkinter.Button (ResourceMachine,text="Search",image=bPhoto1,borderwidth=0,command=lambda:[sQuery(), nQuery(),lChoice()])
+# searchButton1.grid(column=1,row=2, sticky="ns")
+# searchButton1.bind("<Enter>",on_enter)
+# searchButton1.bind("<Leave>",on_leave)
+
+def pageMaker():
+   pNumber = pNumMaker.get()
+
+
+   if pNumber.isdigit()==True:
+
+      print(pNumber)
+
+   else:
+      pass
+
+pNumName=tkinter.Label(ResourceMachine,text="Page #:",anchor="center",font=("montserrat"))
+pNumName.grid(row=11,column=1, sticky="nsew")
+pNumber=tkinter.IntVar()
+
+pNumMaker = tkinter.Entry(ResourceMachine,textvariable=pNumber,font=("montserrat"))
+pNumMaker.grid(row=12, column=1, sticky="ns")
+
+def on_enter(e):
+   bSwitcher4()
+
+def on_leave(e):
+   bSwitcher3()
+
+def bSwitcher3():
+   pageButton1.config(image=bPhoto3)
+def bSwitcher4():
+   pageButton1.config(image=bPhoto4)
+pageButton1 = tkinter.Button (ResourceMachine,text="Go",borderwidth=0,image=bPhoto3,command=pageMaker)
+pageButton1.grid(column=1,row=13, sticky="ns")
+pageButton1.bind("<Enter>",on_enter)
+pageButton1.bind("<Leave>",on_leave)
+
+def pNVal():
+
+   sRequest = searchBar2.get()
+   print(sRequest)
+
+print(pageButton1)
+length = ""
+if choice1.get() == 1:
+    length="short"
+if choice1.get() == 2:
+    length="medium"
+if choice1.get() == 3:
+    length="long"
+else:
+    length="any"
+nRequest = tkinter.IntVar(value=nRequest.get())
+nRequest = str(nRequest)
+#nRequest.get()
+#if nRequest==tkinter.IntVar(ResourceMachine,"5"):
+    #Request=int(5)
+
+def goSearch(sRequest,nRequest,length):
+    urlcopy = "https://www.youtube.com/watch?v="
+    yt = build('youtube', 'v3', developerKey="AIzaSyBwTHdGMSoIk_Ik2dTNojfjt7tJRy0dfuI")
+    videoid = []
+
+    topic=sRequest
+    num=nRequest
+    leng = length
+    class Search:
+        def __init__(self, tx, nm, ln):
+            self.topic = tx
+            self.num = nm
+            self.leng = ln
+            #super().__init__(tx, nm, ln)
+        pass
+
+    n = Search(topic, num, leng)
+    #numR = int(num)
+    numR=1
+    try:
+        numR = int(num)
+    except ValueError:
+        pass
+    k = yt.search().list(
+        part='snippet',
+        q=topic,
+        topicId="/m/01k8wb",
+        type = 'video',
+        videoDuration = leng,
+        order='relevance',
+        relevanceLanguage="en",
+        maxResults=numR
+    ).execute()
+    print(k)
+
+    for result in k.get("items", []):
+        videoid.append("%s" % (result["id"]["videoId"]))
+
+    print ("\n".join(videoid))
+
+    for i in range(numR):
+        print (urlcopy + videoid[i])
+#goSearch(sRequest,nRequest,length)
+def on_enter(e):
+   bSwitcher2()
+
+def on_leave(e):
+   bSwitcher1()
+
+def bSwitcher1():
+   searchButton1.config(image=bPhoto1)
+def bSwitcher2():
+   searchButton1.config(image=bPhoto2)
+
+searchButton1 = tkinter.Button (ResourceMachine,text="Search",image=bPhoto1,borderwidth=0,command=lambda:[sQuery(), nQuery(),lChoice(),goSearch(sRequest,nRequest,length),eCheck()])
+searchButton1.grid(column=1,row=2, sticky="ns")
+searchButton1.bind("<Enter>",on_enter)
+searchButton1.bind("<Leave>",on_leave)
+def eCheck():
+    print(sRequest)
+    print(nRequest)
+    print(length)
+ResourceMachine.mainloop()
